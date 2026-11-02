@@ -3,6 +3,17 @@ const carrera = slug => CARRERAS.find(c => c.slug === slug);
 const proyectosDe = slug => PROYECTOS.filter(p => p.carrera === slug);
 const esc = s => String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
 const param = k => new URLSearchParams(location.search).get(k);
+const parrafos = t => String(t || '').split(/\n+/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('');
+
+/* Carga los datos de la API; si falla, muestra un aviso en lugar de la página vacía. */
+async function conDatos(contenedor) {
+  try { await cargarDatos(); return true; }
+  catch (e) {
+    console.error('No se pudo leer la API', e);
+    $(contenedor).innerHTML = '<div class="wrap"><div class="empty" style="margin-top:40px"><b>No pudimos cargar los proyectos</b>Hubo un problema de conexión con el servidor. Probá de nuevo en unos minutos.<br><a class="btn red" style="margin-top:16px" href="">Reintentar</a></div></div>';
+    return false;
+  }
+}
 
 function layout(active) {
   $('#header').innerHTML = `<div class="topbar"><div class="wrap">
@@ -17,7 +28,7 @@ function layout(active) {
 function tarjeta(p) {
   const c = carrera(p.carrera);
   return `<a class="card" href="proyecto.html?id=${encodeURIComponent(p.id)}">
-    <div class="im">${p.destacado ? '<span class="badge">★ Destacado</span>' : ''}<img src="${esc(p.imagenes[0])}" alt="${esc(p.titulo)}" loading="lazy"></div>
+    <div class="im ${p.miniaturas.length ? '' : 'sin'}">${p.destacado ? '<span class="badge">★ Destacado</span>' : ''}${p.miniaturas.length ? `<img src="${esc(p.miniaturas[0])}" alt="${esc(p.textosAlt[0] || p.titulo)}" loading="lazy">` : ''}</div>
     <div class="bd"><span class="car">${esc(c.corto)} · ${p.anio}</span><h3>${esc(p.titulo)}</h3>
     <span class="al">👤 ${p.alumnos.map(esc).join(' · ')}</span><p class="rs">${esc(p.resumen)}</p>
     <div class="tags">${p.tecnologias.slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
@@ -43,8 +54,10 @@ function initCarrusel() {
   go(0); play();
 }
 
-function initHome() {
+async function initHome() {
   layout('inicio');
+  $('#careers').innerHTML = '<div class="empty"><b>Cargando…</b></div>';
+  if (!await conDatos('#careers')) return;
   initCarrusel();
   $('#careers').innerHTML = CARRERAS.map(c => {
     const n = proyectosDe(c.slug).length;
@@ -54,8 +67,10 @@ function initHome() {
   $('#destacados-grid').innerHTML = dest.length ? dest.map(tarjeta).join('') : '<div class="empty"><b>Aún no hay proyectos destacados</b></div>';
 }
 
-function initCarrera() {
+async function initCarrera() {
   layout('');
+  $('#lista').innerHTML = '<div class="empty"><b>Cargando…</b></div>';
+  if (!await conDatos('#main')) return;
   const c = carrera(param('c'));
   if (!c) { $('#main').innerHTML = '<div class="wrap"><div class="empty" style="margin-top:40px"><b>Carrera no encontrada</b><a class="btn red" href="index.html">Volver al inicio</a></div></div>'; return; }
   document.title = c.corto + ' · Proyectos CENT 35';
@@ -83,28 +98,34 @@ function initCarrera() {
   $('#q').addEventListener('input', render); $('#anio').addEventListener('change', render); render();
 }
 
-function initProyecto() {
+async function initProyecto() {
   layout('');
+  if (!await conDatos('#main')) return;
   const p = PROYECTOS.find(x => x.id === param('id'));
   if (!p) { $('#main').innerHTML = '<div class="wrap"><div class="empty" style="margin-top:40px"><b>Proyecto no encontrado</b><a class="btn red" href="index.html">Volver al inicio</a></div></div>'; return; }
   const c = carrera(p.carrera); document.title = p.titulo + ' · CENT 35';
   $('#crumb').innerHTML = `<a href="index.html">Inicio</a> › <a href="carrera.html?c=${c.slug}">${esc(c.corto)}</a> › ${esc(p.titulo)}`;
   $('#titulo').textContent = p.titulo; $('#sub').textContent = p.resumen;
-  $('#gal').innerHTML = `<div class="gal-main" id="gm"><img id="gi" src="${esc(p.imagenes[0])}" alt="${esc(p.titulo)}"></div>
-    <div class="thumbs">${p.imagenes.map((s, i) => `<button class="${i ? '' : 'on'}" data-i="${i}"><img src="${esc(s)}" alt="Imagen ${i + 1}"></button>`).join('')}</div>`;
+  $('#gal').innerHTML = p.imagenes.length
+    ? `<div class="gal-main" id="gm"><img id="gi" src="${esc(p.imagenes[0])}" alt="${esc(p.textosAlt[0] || p.titulo)}"></div>
+    ${p.imagenes.length > 1 ? `<div class="thumbs">${p.miniaturas.map((s, i) => `<button class="${i ? '' : 'on'}" data-i="${i}"><img src="${esc(s)}" alt="${esc(p.textosAlt[i] || 'Imagen ' + (i + 1))}"></button>`).join('')}</div>` : ''}`
+    : '<div class="gal-main sin"></div>';
   $('#info').innerHTML = `<h4>Alumnos</h4><ul>${p.alumnos.map(a => `<li>${esc(a)}</li>`).join('')}</ul>
     <h4>Carrera</h4><p>${esc(c.nombre)}</p><h4>Año</h4><p>${p.anio}</p>
+    ${p.materia ? `<h4>Materia</h4><p>${esc(p.materia)}</p>` : ''}
     ${p.docente ? `<h4>Docente</h4><p>${esc(p.docente)}</p>` : ''}
-    <h4>Tecnologías</h4><div class="tags">${p.tecnologias.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+    ${p.tecnologias.length ? `<h4>Tecnologías</h4><div class="tags">${p.tecnologias.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
     ${(p.enlaces || []).map(l => `<a class="btn red" style="margin-top:16px" target="_blank" rel="noopener" href="${esc(l.url)}">${esc(l.texto)}</a>`).join('')}`;
-  $('#txt').innerHTML = `<h2>Sobre el proyecto</h2><p>${esc(p.descripcion)}</p>${p.objetivos ? `<h2 style="margin-top:22px">Objetivos</h2><ul>${p.objetivos.map(o => `<li>${esc(o)}</li>`).join('')}</ul>` : ''}`
-    + '<div class="note">Proyecto de prueba con datos ficticios, generado para demostración del sitio.</div>';
+  $('#txt').innerHTML = `<h2>Sobre el proyecto</h2>${parrafos(p.descripcion || p.resumen)}${p.objetivos.length ? `<h2 style="margin-top:22px">Objetivos</h2><ul>${p.objetivos.map(o => `<li>${esc(o)}</li>`).join('')}</ul>` : ''}`
+    + (p.esPrueba ? '<div class="note">Proyecto de prueba con datos ficticios, generado para demostración del sitio.</div>' : '');
   const gi = $('#gi');
-  document.querySelectorAll('.thumbs button').forEach(b => b.onclick = () => {
-    gi.src = p.imagenes[b.dataset.i];
-    document.querySelectorAll('.thumbs button').forEach(x => x.classList.toggle('on', x === b));
-  });
-  $('#gm').onclick = () => { $('#lbi').src = gi.src; $('#lb').classList.add('on'); };
+  if (gi) {
+    document.querySelectorAll('.thumbs button').forEach(b => b.onclick = () => {
+      gi.src = p.imagenes[b.dataset.i];
+      document.querySelectorAll('.thumbs button').forEach(x => x.classList.toggle('on', x === b));
+    });
+    $('#gm').onclick = () => { $('#lbi').src = gi.src; $('#lb').classList.add('on'); };
+  }
   $('#lb').onclick = () => $('#lb').classList.remove('on');
   document.addEventListener('keydown', e => e.key === 'Escape' && $('#lb').classList.remove('on'));
 }

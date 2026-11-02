@@ -132,3 +132,5 @@ footer b{display:block;margin-bottom:6px;letter-spacing:1px;text-transform:upper
 footer p{opacity:.8}
 
 @media(max-width:820px){.detail{grid-template-columns:1fr}.nav{display:none}.hero .wrap{padding:56px 20px 90px}}
+
+.card .im.sin,.gal-main.sin{background:linear-gradient(135deg,var(--navy),#2a3a5c);min-height:200px}
