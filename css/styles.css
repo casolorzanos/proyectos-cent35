@@ -66,12 +66,13 @@ section{padding:56px 0 8px}
 .careers{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .career{background:var(--card);border-radius:var(--radius);padding:20px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow);border:2px solid transparent;transition:.2s}
 .career:hover{transform:translateY(-3px);border-color:var(--orange)}
-.career .cod{flex:none;width:54px;height:54px;border-radius:14px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px}
+.career .cod{flex:none;width:60px;height:60px;border-radius:14px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px}
 .career:nth-child(4n+2) .cod{background:var(--orange);color:var(--on-light)}
 .career:nth-child(4n+3) .cod{background:var(--green);color:var(--on-light)}
 .career:nth-child(4n) .cod{background:var(--sky);color:var(--on-light)}
 .career h3{font-size:14px;line-height:1.3;font-weight:700}
 .career small{color:var(--muted);font-size:12px}
+.career .cod.ico::before{content:"";width:42px;height:42px;background:currentColor;-webkit-mask:var(--ico) center/contain no-repeat;mask:var(--ico) center/contain no-repeat}
 .career.has .cod{box-shadow:0 0 0 4px rgba(91,175,213,.4)}
 
 /* Tarjetas de proyecto */

@@ -61,7 +61,7 @@ async function initHome() {
   initCarrusel();
   $('#careers').innerHTML = CARRERAS.map(c => {
     const n = proyectosDe(c.slug).length;
-    return `<a class="career ${n ? 'has' : ''}" href="carrera.html?c=${c.slug}"><span class="cod">${c.codigo}</span><div><h3>${esc(c.nombre)}</h3><small>${n ? n + ' proyecto' + (n > 1 ? 's' : '') : 'Próximamente'}</small></div></a>`;
+    return `<a class="career ${n ? 'has' : ''}" href="carrera.html?c=${c.slug}"><span class="cod ico" style="--ico:url(${new URL('img/carreras/' + c.slug + '.png', document.baseURI).href})" role="img" aria-label="${esc(c.corto)}"></span><div><h3>${esc(c.nombre)}</h3><small>${n ? n + ' proyecto' + (n > 1 ? 's' : '') : 'Próximamente'}</small></div></a>`;
   }).join('');
   const dest = PROYECTOS.filter(p => p.destacado);
   $('#destacados-grid').innerHTML = dest.length ? dest.map(tarjeta).join('') : '<div class="empty"><b>Aún no hay proyectos destacados</b></div>';
