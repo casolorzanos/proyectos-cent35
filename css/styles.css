@@ -28,6 +28,9 @@ img{max-width:100%;display:block}
 .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease;transform:scale(1.04)}
 .slide.on{opacity:1;animation:kb 12s ease-out forwards}
 @keyframes kb{to{transform:scale(1.12)}}
+/* Cubo institucional, translúcido, sobre todas las imágenes del carrusel */
+.slides::after{content:"";position:absolute;right:7%;top:50%;width:clamp(240px,34vw,470px);aspect-ratio:390/415;transform:translateY(-50%);background:url(../img/cubo.png) center/contain no-repeat;opacity:.3;pointer-events:none}
+@media(max-width:820px){.slides::after{right:-8%;top:58%;width:min(72vw,300px);opacity:.3}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,47,102,.82) 0%,rgba(14,47,102,.45) 55%,rgba(14,47,102,.15) 100%),linear-gradient(0deg,rgba(14,47,102,.6),transparent 40%)}
 .hero .wrap{z-index:2}
 .hero-foot{position:absolute;left:20px;right:20px;bottom:26px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
