@@ -31,7 +31,7 @@ img{max-width:100%;display:block}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,47,102,.82) 0%,rgba(14,47,102,.45) 55%,rgba(14,47,102,.15) 100%),linear-gradient(0deg,rgba(14,47,102,.6),transparent 40%)}
 .hero .wrap{z-index:2}
 .hero-foot{position:absolute;left:20px;right:20px;bottom:26px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
-.cap{display:flex;flex-direction:column;font-size:13px;opacity:.95}.cap b{font-size:15px;letter-spacing:.5px}.cap span{opacity:.8}
+.cap{display:flex;flex-direction:column;font-size:13px;opacity:.95}.cap b{font-size:15px;letter-spacing:.5px}.cap span{opacity:.8;white-space:pre-line}.cap span.it{font-style:italic}
 .dots{display:flex;gap:8px}.dots button{width:30px;height:5px;border-radius:3px;border:0;background:rgba(255,255,255,.4);cursor:pointer;transition:.3s}.dots button.on{background:#fff;width:46px}
 .arw{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:28px;line-height:1;cursor:pointer;backdrop-filter:blur(4px)}
 .arw:hover{background:var(--orange-dk)}.arw.prev{left:14px}.arw.next{right:14px}

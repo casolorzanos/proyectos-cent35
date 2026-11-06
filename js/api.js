@@ -10,7 +10,7 @@ const API_BASE = 'https://g1803fb32fe4f7e-sigi.adb.us-ashburn-1.oraclecloudapps.
 
 /* Carrusel de respaldo: se usa solo si la API no tiene slides activos. */
 const CARRUSEL_POR_DEFECTO = [
-  { src: 'img/carrusel/1-cordillera.svg', titulo: 'CENT 35 · Río Grande', texto: 'Tierra del Fuego, el fin del mundo', pos: 'center' },
+  { src: 'img/carrusel/1-cordillera.svg', titulo: 'CENT 35 · Río Grande', texto: 'Río Grande - Tolhuin,\nConstruyendo Futuro', cursiva: true, pos: 'center' },
   { src: 'img/carrusel/2-costa.svg', titulo: 'Formación técnica superior', texto: 'Carreras con salida laboral en la provincia', pos: 'center' },
   { src: 'img/carrusel/3-bosque.svg', titulo: 'Proyectos con identidad fueguina', texto: 'Tecnología aplicada a problemas locales', pos: 'center' },
   { src: 'img/carrusel/4-noche.svg', titulo: 'Más de 30 años formando técnicos', texto: 'Desde 1988 en Río Grande', pos: 'center' }

@@ -45,7 +45,7 @@ function initCarrusel() {
     cur = (n + CARRUSEL.length) % CARRUSEL.length;
     box.querySelectorAll('.slide').forEach((e, i) => e.classList.toggle('on', i === cur));
     dots.querySelectorAll('button').forEach((e, i) => e.classList.toggle('on', i === cur));
-    cap.innerHTML = `<b>${esc(CARRUSEL[cur].titulo)}</b><span>${esc(CARRUSEL[cur].texto)}</span>`;
+    cap.innerHTML = `<b>${esc(CARRUSEL[cur].titulo)}</b><span${CARRUSEL[cur].cursiva ? ' class="it"' : ''}>${esc(CARRUSEL[cur].texto)}</span>`;
   };
   const play = () => { clearInterval(t); if (!matchMedia('(prefers-reduced-motion:reduce)').matches) t = setInterval(() => go(cur + 1), 6000); };
   dots.querySelectorAll('button').forEach((b, i) => b.onclick = () => { go(i); play(); });

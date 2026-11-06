@@ -125,7 +125,7 @@ const PROYECTOS = [
    orden y se reemplazan las imágenes ilustradas de ejemplo.
    ============================================================ */
 const CARRUSEL = [
-  { src: "img/carrusel/1-cordillera.svg", titulo: "CENT 35 · Río Grande", texto: "Tierra del Fuego, el fin del mundo" },
+  { src: "img/carrusel/1-cordillera.svg", titulo: "CENT 35 · Río Grande", texto: "Río Grande - Tolhuin,\nConstruyendo Futuro", cursiva: true },
   { src: "img/carrusel/2-costa.svg",      titulo: "Formación técnica superior", texto: "Carreras con salida laboral en la provincia" },
   { src: "img/carrusel/3-bosque.svg",     titulo: "Proyectos con identidad fueguina", texto: "Tecnología aplicada a problemas locales" },
   { src: "img/carrusel/4-noche.svg",      titulo: "Más de 30 años formando técnicos", texto: "Desde 1988 en Río Grande" }
