@@ -17,12 +17,12 @@ async function conDatos(contenedor) {
 
 function layout(active) {
   $('#header').innerHTML = `<div class="topbar"><div class="wrap">
-    <a class="brand" href="index.html"><img class="logo" src="img/logo-cent35.png" alt="CENT 35"><span><small>Prof. José Julián Godoy</small><small>Proyectos finales</small></span></a>
+    <a class="brand" href="index.html"><img class="logo" src="img/logo-cent35.png" alt="CENT 35"><span><small>Prof. José Julián Godoy</small><small>Proyecto</small></span></a>
     <nav class="nav"><a href="index.html" class="${active === 'inicio' ? 'on' : ''}">Inicio</a><a href="index.html#carreras">Carreras</a><a href="index.html#destacados">Destacados</a><a href="https://cent35.edu.ar" target="_blank" rel="noopener">Sitio del CENT 35</a></nav>
   </div></div>`;
   $('#footer').innerHTML = `<footer><div class="wrap">
     <div><b>CENT 35 · Prof. José Julián Godoy</b><p>Instituto de Educación Superior Técnica<br>Río Grande, Tierra del Fuego, Antártida e Islas del Atlántico Sur</p></div>
-    <div><b>Proyectos finales</b><p>Galería de trabajos de los estudiantes<br>de todas las carreras.</p></div></div></footer>`;
+    <div><b>Proyecto</b><p>Galería de trabajos de los estudiantes<br>de todas las carreras.</p></div></div></footer>`;
 }
 
 function tarjeta(p) {

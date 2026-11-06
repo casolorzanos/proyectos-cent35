@@ -1,5 +1,5 @@
 /* ============================================================
-   DATOS DEL SITIO - Proyectos Finales CENT 35
+   DATOS DEL SITIO - Proyecto CENT 35
    Para agregar un proyecto: copiar un bloque de PROYECTOS y
    completar los campos. "carrera" debe coincidir con un "slug"
    de CARRERAS. Las imágenes van en la carpeta img/ (JPG, PNG, SVG).

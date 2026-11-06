@@ -1,5 +1,5 @@
 /* ============================================================
-   CLIENTE DE LA API (Oracle ORDS) - Proyectos Finales CENT 35
+   CLIENTE DE LA API (Oracle ORDS) - Proyecto CENT 35
    Lee los servicios REST del módulo "cent35" y arma las mismas
    estructuras que usa app.js: CARRERAS, PROYECTOS y CARRUSEL.
    Los endpoints son de solo lectura y públicos (CORS habilitado
