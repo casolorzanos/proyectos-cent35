@@ -13,7 +13,7 @@ img{max-width:100%;display:block}
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
 /* Header */
-.topbar{background:var(--celeste);position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(14,47,102,.15);border-bottom:1px solid rgba(14,47,102,.1)}
+.topbar{background:#fff;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(14,47,102,.15);border-bottom:1px solid rgba(14,47,102,.1)}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:62px}
 .brand{display:flex;align-items:center;gap:12px;color:var(--navy)}
 .brand .logo{height:34px;width:auto;display:block}
