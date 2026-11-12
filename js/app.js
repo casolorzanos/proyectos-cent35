@@ -21,7 +21,7 @@ function layout(active) {
     <nav class="nav"><a href="index.html" class="${active === 'inicio' ? 'on' : ''}">Inicio</a><a href="index.html#carreras">Carreras</a><a href="index.html#destacados">Destacados</a><a href="https://cent35.edu.ar" target="_blank" rel="noopener">Sitio del CENT 35</a></nav>
   </div></div>`;
   $('#footer').innerHTML = `<footer><div class="wrap">
-    <div><b>CENT 35 · Prof. Julián José Godoy</b><p>Instituto de Educación Superior Técnica<br>Río Grande, Tierra del Fuego, Antártida e Islas del Atlántico Sur</p></div>
+    <div><b>CENT 35 · Prof. Julián José Godoy</b><p>Centro de Educación Superior Técnica<br>Río Grande y Tolhuin, Tierra del Fuego, Antártida e Islas del Atlántico Sur</p></div>
     <div><b>Proyecto</b><p>Galería de trabajos de los estudiantes<br>de todas las carreras.</p></div></div></footer>`;
 }
 

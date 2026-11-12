@@ -1,6 +1,6 @@
 # Proyecto - CENT 35
 
-Galería de proyectos de los alumnos del CENT 35 (Río Grande, Tierra del Fuego).
+Galería de proyectos de los alumnos del CENT 35 (Río Grande y Tolhuin, Tierra del Fuego).
 
 Sitio estático (HTML, CSS y JS). Los datos se editan en `js/data.js`.
 
