@@ -17,7 +17,7 @@ async function conDatos(contenedor) {
 
 function layout(active) {
   $('#header').innerHTML = `<div class="topbar"><div class="wrap">
-    <a class="brand" href="index.html"><img class="logo" src="img/logo-cent35.png" alt="CENT 35"><span><small>Prof. Julián José Godoy</small><small>Proyecto</small></span></a>
+    <a class="brand" href="index.html"><img class="logo" src="img/logo-cent35-oscuro.png" alt="CENT 35"><span><small>Prof. Julián José Godoy</small><small class="it">Construyendo futuro</small></span></a>
     <nav class="nav"><a href="index.html" class="${active === 'inicio' ? 'on' : ''}">Inicio</a><a href="index.html#carreras">Carreras</a><a href="index.html#destacados">Destacados</a><a href="https://cent35.edu.ar" target="_blank" rel="noopener">Sitio del CENT 35</a></nav>
   </div></div>`;
   $('#footer').innerHTML = `<footer><div class="wrap">

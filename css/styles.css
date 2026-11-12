@@ -2,7 +2,7 @@
   /* Paleta del afiche MPA 2026: azul de las letras + naranja, verde y celeste del cubo */
   --navy:#0e2f66; --navy-2:#123f8a; --blue:#155ac1; --sky:#5bafd5; --orange:#df813e; --orange-dk:#b8561a;
   --green:#62d331; --on-light:#1f1e1d; --ink:#373634; --muted:#6a6866; --bg:#f4f6f9; --card:#fff;
-  --grad:linear-gradient(135deg,#0e2f66 0%,#155ac1 60%,#5bafd5 100%);
+  --grad:linear-gradient(135deg,#0e2f66 0%,#155ac1 60%,#5bafd5 100%); --celeste:#dceffa; --celeste-2:#c6e4f5;
   --radius:18px; --shadow:0 10px 30px rgba(14,47,102,.12);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -13,17 +13,18 @@ img{max-width:100%;display:block}
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
 /* Header */
-.topbar{background:var(--navy);position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.topbar{background:var(--celeste);position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(14,47,102,.15);border-bottom:1px solid rgba(14,47,102,.1)}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:62px}
-.brand{display:flex;align-items:center;gap:12px;color:#fff}
+.brand{display:flex;align-items:center;gap:12px;color:var(--navy)}
 .brand .logo{height:34px;width:auto;display:block}
-.brand small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;opacity:.75;line-height:1.2}
+.brand small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;opacity:.85;line-height:1.2}
+.brand small.it{font-style:italic;text-transform:none;letter-spacing:.5px;font-size:11px}
 .nav{display:flex;gap:6px;flex-wrap:wrap}
-.nav a{color:#fff;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;padding:8px 12px;border-radius:8px;opacity:.85}
-.nav a:hover,.nav a.on{background:rgba(255,255,255,.12);opacity:1}
+.nav a{color:var(--navy);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;padding:8px 12px;border-radius:8px;opacity:.85}
+.nav a:hover,.nav a.on{background:rgba(14,47,102,.1);opacity:1}
 
 /* Hero */
-.hero{background:var(--grad);color:#fff;position:relative;overflow:hidden}
+.hero{background:var(--celeste);color:var(--navy);position:relative;overflow:hidden}
 .slides{position:absolute;inset:0}
 .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease;transform:scale(1.04)}
 .slide.on{opacity:1;animation:kb 12s ease-out forwards}
@@ -31,22 +32,22 @@ img{max-width:100%;display:block}
 /* Cubo institucional, translúcido, sobre todas las imágenes del carrusel */
 .slides::after{content:"";position:absolute;right:7%;top:50%;width:clamp(240px,34vw,470px);aspect-ratio:390/415;transform:translateY(-50%);background:url(../img/cubo.png) center/contain no-repeat;opacity:.3;pointer-events:none}
 @media(max-width:820px){.slides::after{right:-8%;top:58%;width:min(72vw,300px);opacity:.3}}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,47,102,.82) 0%,rgba(14,47,102,.45) 55%,rgba(14,47,102,.15) 100%),linear-gradient(0deg,rgba(14,47,102,.6),transparent 40%)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(220,239,250,.94) 0%,rgba(220,239,250,.78) 55%,rgba(220,239,250,.4) 100%),linear-gradient(0deg,rgba(220,239,250,.85),transparent 40%)}
 .hero .wrap{z-index:2}
 .hero-foot{position:absolute;left:20px;right:20px;bottom:26px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
 .cap{display:flex;flex-direction:column;font-size:13px;opacity:.95}.cap b{font-size:15px;letter-spacing:.5px}.cap span{opacity:.8;white-space:pre-line}.cap span.it{font-style:italic}
-.dots{display:flex;gap:8px}.dots button{width:30px;height:5px;border-radius:3px;border:0;background:rgba(255,255,255,.4);cursor:pointer;transition:.3s}.dots button.on{background:#fff;width:46px}
-.arw{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:28px;line-height:1;cursor:pointer;backdrop-filter:blur(4px)}
-.arw:hover{background:var(--orange-dk)}.arw.prev{left:14px}.arw.next{right:14px}
+.dots{display:flex;gap:8px}.dots button{width:30px;height:5px;border-radius:3px;border:0;background:rgba(14,47,102,.3);cursor:pointer;transition:.3s}.dots button.on{background:var(--navy);width:46px}
+.arw{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:0;background:rgba(14,47,102,.14);color:var(--navy);font-size:28px;line-height:1;cursor:pointer;backdrop-filter:blur(4px)}
+.arw:hover{background:var(--orange-dk);color:#fff}.arw.prev{left:14px}.arw.next{right:14px}
 @media(prefers-reduced-motion:reduce){.slide.on{animation:none}}
 .hero .wrap{position:relative;padding:90px 20px 130px}
 .hero h1{font-size:clamp(32px,5vw,56px);line-height:1.1;font-weight:800;max-width:760px}
-.hero h1 span{color:#f6a869}
-.hero p{max-width:620px;margin-top:18px;font-size:18px;opacity:.9}
+.hero h1 span{color:var(--orange-dk)}
+.hero p{max-width:620px;margin-top:18px;font-size:18px;opacity:1;color:var(--ink)}
 .hero .btns{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
 .btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:700;font-size:14px;border:2px solid transparent;cursor:pointer;transition:.2s}
 .btn.red{background:var(--orange-dk);color:#fff}.btn.red:hover{background:#9a4515}
-.btn.ghost{border-color:#fff;color:#fff}.btn.ghost:hover{background:#fff;color:var(--navy)}
+.btn.ghost{border-color:var(--navy);color:var(--navy)}.btn.ghost:hover{background:var(--navy);color:#fff}
 
 /* Banda carreras (como la web del CENT 35) */
 .bar{background:var(--blue);margin-top:-48px;position:relative;z-index:5;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
@@ -96,7 +97,7 @@ section{padding:56px 0 8px}
 .more{font-size:13px;font-weight:800;color:var(--orange-dk);margin-top:6px}
 
 /* Página de carrera */
-.phead{background:var(--grad);color:#fff;padding:54px 0 46px}
+.phead{background:var(--celeste);color:var(--navy);padding:54px 0 46px}
 .phead .crumb{font-size:13px;opacity:.8;margin-bottom:10px}
 .phead .crumb a:hover{text-decoration:underline}
 .phead h1{font-size:clamp(24px,3.6vw,38px);line-height:1.15;max-width:860px;font-weight:800}
