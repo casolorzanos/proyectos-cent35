@@ -5,14 +5,39 @@ const esc = s => String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;'
 const param = k => new URLSearchParams(location.search).get(k);
 const parrafos = t => String(t || '').split(/\n+/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('');
 
-/* Carga los datos de la API; si falla, muestra un aviso en lugar de la página vacía. */
-async function conDatos(contenedor) {
+/* Pantalla de mantenimiento: reemplaza el contenido de la página (entre el encabezado y el pie)
+   cuando no se puede conectar con el servicio REST. Reintenta sola cada 30 s y, apenas el
+   servicio responde, recarga la página. */
+const MANT_REINTENTO_MS = 30000;
+function mostrarMantenimiento() {
+  const h = $('#header'), f = $('#footer');
+  for (let n = h.nextElementSibling; n && n !== f;) { const sig = n.nextElementSibling; n.remove(); n = sig; }
+  document.title = 'Sitio en mantenimiento · CENT 35';
+  h.insertAdjacentHTML('afterend', `<div class="mant" role="status"><div class="wrap"><div class="mant-card">
+    <div class="mant-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></div>
+    <span class="mant-kicker">Sitio en mantenimiento</span>
+    <h1>Volvemos en unos minutos</h1>
+    <p>Estamos realizando tareas de mantenimiento y en este momento no podemos mostrar los proyectos de nuestros estudiantes. Gracias por tu paciencia.</p>
+    <div class="btns"><button type="button" class="btn red" id="mant-retry">Reintentar</button><a class="btn ghost" href="https://cent35.edu.ar" target="_blank" rel="noopener">Sitio del CENT 35</a></div>
+    <p class="mant-msg" id="mant-msg" aria-live="polite">Volvemos a intentarlo automáticamente cada 30 segundos.</p>
+  </div></div></div>`);
+  const btn = $('#mant-retry'), msg = $('#mant-msg');
+  let probando = false;
+  const probar = async manual => {
+    if (probando) return; probando = true;
+    if (manual) { btn.disabled = true; btn.textContent = 'Verificando…'; }
+    try { await cargarDatos(); location.reload(); }
+    catch (e) { if (manual) msg.textContent = 'Todavía no podemos conectar con el servidor. Probá de nuevo en unos minutos.'; }
+    finally { probando = false; if (manual) { btn.disabled = false; btn.textContent = 'Reintentar'; } }
+  };
+  btn.onclick = () => probar(true);
+  setInterval(() => probar(false), MANT_REINTENTO_MS);
+}
+
+/* Carga los datos de la API; si no se puede conectar, muestra la pantalla de mantenimiento. */
+async function conDatos() {
   try { await cargarDatos(); return true; }
-  catch (e) {
-    console.error('No se pudo leer la API', e);
-    $(contenedor).innerHTML = '<div class="wrap"><div class="empty" style="margin-top:40px"><b>No pudimos cargar los proyectos</b>Hubo un problema de conexión con el servidor. Probá de nuevo en unos minutos.<br><a class="btn red" style="margin-top:16px" href="">Reintentar</a></div></div>';
-    return false;
-  }
+  catch (e) { console.error('No se pudo leer la API', e); mostrarMantenimiento(); return false; }
 }
 
 function layout(active) {

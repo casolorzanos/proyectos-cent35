@@ -18,15 +18,24 @@ const CARRUSEL_POR_DEFECTO = [
 
 let CARRERAS = [], PROYECTOS = [], CARRUSEL = [];
 
+/* Tiempo máximo de espera por cada pedido a la API; pasado ese tiempo se considera caída. */
+const API_TIEMPO_MAXIMO_MS = 15000;
+
 /* Trae todas las páginas de una colección ORDS ({items, hasMore, limit, offset}). */
 async function apiLista(recurso) {
   const items = [];
   let offset = 0;
   for (let i = 0; i < 50; i++) {
-    const r = await fetch(`${API_BASE}${recurso}?offset=${offset}`, { headers: { Accept: 'application/json' } });
-    if (!r.ok) throw new Error(`${recurso}: HTTP ${r.status}`);
-    const j = await r.json();
-    items.push(...(j.items || []));
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), API_TIEMPO_MAXIMO_MS);
+    let j;
+    try {
+      const r = await fetch(`${API_BASE}${recurso}?offset=${offset}`, { headers: { Accept: 'application/json' }, signal: ctl.signal });
+      if (!r.ok) throw new Error(`${recurso}: HTTP ${r.status}`);
+      j = await r.json();
+    } finally { clearTimeout(timer); }
+    if (!j || !Array.isArray(j.items)) throw new Error(`${recurso}: respuesta inesperada`);
+    items.push(...j.items);
     if (!j.hasMore) return items;
     offset += j.limit || (j.items || []).length || 1;
   }
